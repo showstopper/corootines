@@ -61,7 +61,10 @@ Coro: cover {
         ucp@ ucStack ssSize  = requestedStackSize
         ucp@ ucStack ssFlags = 0
         ucp@ ucLink = null
-        makecontext(ucp, This startWithArg as Func, 1, arg)
+        t: Pointer
+        t = arg&
+        makecontext(ucp, func { this startWithArg((arg&) as Pointer) }, 0)
+        //This startWithArg as Func, 1, arg)
     }
 
     switchTo: func(next: Coro) {
